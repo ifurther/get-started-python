@@ -4,9 +4,18 @@ import atexit
 import os
 import json
 
+import matplotlib.pyplot as plt
+import numpy as np
+
+import math
+import urllib2
+import StringIO
+from PIL import Image
+
 app = Flask(__name__, static_url_path='')
 
 db_name = 'mydb'
+population_db_name='population_tw'
 client = None
 db = None
 
@@ -33,10 +42,13 @@ elif os.path.isfile('vcap-local.json'):
         url = 'https://' + creds['host']
         client = Cloudant(user, password, url=url, connect=True)
         db = client.create_database(db_name, throw_on_exists=False)
+        population_db = client.create_database(population_db_name, throw_on_exists=False)
 
 # On IBM Cloud Cloud Foundry, get the port number from the environment variable PORT
 # When running this app on the local machine, default the port to 8000
 port = int(os.getenv('PORT', 8000))
+
+
 
 @app.route('/')
 def root():

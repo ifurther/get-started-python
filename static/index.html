@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hello World</title>
 
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
@@ -52,6 +54,7 @@
 
 <body>
     <div class="container" id="container">
+	    <div id="my-map"></div>
         <h1 data-i18n="welcome"></h1> <!- Welcome ->
         <div id="nameInput" class="input-group-lg center-block helloInput">
             <p class="lead" data-i18n="what_is_your_name"></p>
@@ -72,7 +75,7 @@
 
 </html>
 
-
+<script src='leafletmap.js'></script>
 <script>
     	//Submit data when enter key is pressed
         $('#user_name').keydown(function(e) {
