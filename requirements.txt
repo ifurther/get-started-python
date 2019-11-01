@@ -6,3 +6,4 @@ pandas
 geopy
 Pillow
 geopandas
+requests
