@@ -16,8 +16,11 @@ app = Flask(__name__, static_url_path='')
 
 db_name = 'mydb'
 population_db_name='population_tw'
+parking_db_name='parking_tw'
 client = None
 db = None
+population_db = None
+parking_db = None
 
 if 'VCAP_SERVICES' in os.environ:
     vcap = json.loads(os.getenv('VCAP_SERVICES'))
@@ -30,10 +33,12 @@ if 'VCAP_SERVICES' in os.environ:
         client = Cloudant(user, password, url=url, connect=True)
         db = client.create_database(db_name, throw_on_exists=False)
         population_db = client.create_database(population_db_name, throw_on_exists=False)
+        parking_db = client.create_database(parking_db_name, throw_on_exists=False)
 elif "CLOUDANT_URL" in os.environ:
     client = Cloudant(os.environ['CLOUDANT_USERNAME'], os.environ['CLOUDANT_PASSWORD'], url=os.environ['CLOUDANT_URL'], connect=True)
     db = client.create_database(db_name, throw_on_exists=False)
     population_db = client.create_database(population_db_name, throw_on_exists=False)
+    parking_db = client.create_database(parking_db_name, throw_on_exists=False)
 elif os.path.isfile('vcap-local.json'):
     with open('vcap-local.json') as f:
         vcap = json.load(f)
@@ -45,6 +50,7 @@ elif os.path.isfile('vcap-local.json'):
         client = Cloudant(user, password, url=url, connect=True)
         db = client.create_database(db_name, throw_on_exists=False)
         population_db = client.create_database(population_db_name, throw_on_exists=False)
+        parking_db = client.create_database(parking_db_name, throw_on_exists=False)
 
 # On IBM Cloud Cloud Foundry, get the port number from the environment variable PORT
 # When running this app on the local machine, default the port to 8000
@@ -107,6 +113,13 @@ def get_population():
         print('No database')
         return jsonify([])
 
+@app.route('/api/parking', methods=['GET'])
+def get_parking():
+    if client:
+        return jsonify(list(map(lambda doc: doc['name'], db)))
+    else:
+        print('No database')
+        return jsonify([])
 
 @atexit.register
 def shutdown():

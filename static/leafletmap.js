@@ -7,6 +7,19 @@ window.onload = function () {
         attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
 	
+	$.ajax({
+    url: "/api/ParkingPoi",
+    contentType: 'application/json',
+    type: 'GET',
+    contentType: 'application/json; charset=utf-8',
+    success: function(data) {
+         $.each(data.pois, function(k, v) {
+            L.marker([v[0], v[1]]).addTo(map)
+            .bindPopup(v.ParkName)
+            .openPopup();
+         });
+        }
+    });
     //$.getJSON("census.geojson", function(data) {
 
     //var geojson = L.geoJson(data, {
