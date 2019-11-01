@@ -54,7 +54,7 @@ elif os.path.isfile('vcap-local.json'):
         
 def download_taipei_parking(data):
     for parkdata in json.loads(data.text)['result']['results']:
-        print(parkdata['_id'])
+        #print(parkdata['_id'])
         jsonDocument = {
             "ParkName": parkdata['停車場名稱'],
             "Parlat": parkdata['緯度(WGS84)'],
