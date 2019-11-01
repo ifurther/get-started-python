@@ -17,3 +17,8 @@ body {
 .helloInput {
   width: 300px;
 }
+
+#my-map {
+	width:960px;
+	height:500px;
+}
