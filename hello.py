@@ -92,6 +92,21 @@ def put_visitor():
     else:
         print('No database')
         return jsonify(data)
+##Me test
+# /* Endpoint to greet and add a new visitor to database.
+# * Send a POST request to localhost:8000/api/visitors with body
+# * {
+# *     "name": "Bob"
+# * }
+# */
+@app.route('/api/population', methods=['GET'])
+def get_population():
+    if client:
+        return jsonify(list(map(lambda doc: doc['name'], population_db)))
+    else:
+        print('No database')
+        return jsonify([])
+
 
 @atexit.register
 def shutdown():
