@@ -1,16 +1,9 @@
 from cloudant import Cloudant
+from cloudant.result import Result, ResultByKey
 from flask import Flask, render_template, request, jsonify
 import atexit
 import os
 import json
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-import math
-import urllib2
-import StringIO
-from PIL import Image
 
 app = Flask(__name__, static_url_path='')
 
@@ -113,10 +106,18 @@ def get_population():
         print('No database')
         return jsonify([])
 
-@app.route('/api/parking', methods=['GET'])
+@app.route('/api/ParkingPoi', methods=['GET'])
 def get_parking():
     if client:
-        return jsonify(list(map(lambda doc: doc['name'], db)))
+        result_collection = Result(parking_db.all_docs, include_docs=True)
+        #star = parking_db.stars
+        output = []
+        #for s in star.find():
+        #    output.append({'name' : s['ParkName'], 'distance' : s['Parlat']})
+        for result in result_collection:
+            #print(result)
+            output.append([result['doc']['ParkName'],result['doc']['Parlat'],result['doc']['Parlon']])
+        return jsonify(output)
     else:
         print('No database')
         return jsonify([])
